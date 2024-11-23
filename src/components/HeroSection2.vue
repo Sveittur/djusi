@@ -1,13 +1,18 @@
 <template>
-    <section
-      :class="[drinks[activeSlide].bgClass, 'w-full h-[100vh] relative overflow-hidden flex items-center justify-center transition-colors duration-1000']"
-      @colorChange="emitColorChange"
+  <section
+    :class="[drinks[activeSlide].bgClass, 'w-full h-[100vh] relative overflow-hidden flex items-center justify-center transition-colors duration-1000']"
+    @colorChange="emitColorChange"
+  >
+    <!-- Bottom Mask gradient for blending into the component below -->
+    <div class="absolute bottom-0 left-0 w-full h-32 pointer-events-none bg-gradient-to-t from-white to-transparent"></div>
+
+    <!-- Content Wrapper -->
+    <div
+      class="z-10 flex flex-col md:flex-row items-center justify-center w-full h-full px-4 md:px-12"
+      :class="{'pt-12': true, 'md:pt-0': true}"
     >
-      <!-- Bottom Mask gradient for blending into the component below -->
-      <div class="absolute bottom-0 left-0 w-full h-32 pointer-events-none bg-gradient-to-t from-white to-transparent"></div>
-  
-      <!-- Text Section on the Left -->
-      <div class="z-10 w-2/5 px-12 relative">
+      <!-- Text Section -->
+      <div class="w-full md:w-2/5 px-4 md:px-12 text-center md:text-left mb-6 md:mb-0">
         <transition-group
           name="text"
           tag="div"
@@ -15,34 +20,41 @@
           leave-active-class="animate-text-out-left"
           class="relative"
         >
-          <div :key="activeSlide" class="absolute top-[-15vh] left-0">
-            <h1 class="text-6xl font-bold mb-6 text-white">{{ drinks[activeSlide].name }}</h1>
-            <p class="text-2xl text-white">{{ drinks[activeSlide].description }}</p>
+          <div :key="activeSlide">
+            <h1 class="text-2xl sm:text-4xl md:text-6xl font-bold mb-4 md:mb-6 text-white">
+              {{ drinks[activeSlide].name }}
+            </h1>
+            <p class="text-sm sm:text-lg md:text-xl text-white">
+              {{ drinks[activeSlide].description }}
+            </p>
           </div>
         </transition-group>
       </div>
-  
-      <!-- Drinks Section with 3 Cans -->
-      <div class="relative flex items-center justify-center w-2/5 h-[80vh]">
-        <!-- Left Drink behind center with small animation -->
+
+      <!-- Drinks Section -->
+      <div
+        class="relative flex items-center justify-center w-full md:w-2/5 h-[50vh] sm:h-[60vh] md:h-[80vh]"
+        :class="{'mt-[-30px]': true, 'md:mt-0': true}"  
+      >
+        <!-- Left Drink -->
         <transition
           name="fade-up-in-small"
           enter-active-class="animate-fade-up-in-small"
           leave-active-class="animate-fade-up-out-small"
-          class="absolute w-[80%] h-full transform scale-90 left-[-20%] opacity-50 transition-all duration-1000 ease-in-out" 
+          class="absolute w-[80%] h-full transform scale-90 left-[-20%] opacity-50 transition-all duration-1000 ease-in-out"
         >
           <div
             :key="'left-' + activeSlide"
-            :style="{ 
-              backgroundImage: `url(${drinks[activeSlide].src})`, 
+            :style="{
+              backgroundImage: `url(${drinks[activeSlide].src})`,
               backgroundSize: 'cover',
-              backgroundPosition: 'center'
+              backgroundPosition: 'center',
             }"
             class="w-full h-full bg-no-repeat bg-center rounded-lg"
           ></div>
         </transition>
-  
-        <!-- Center Main Drink with full-size animation -->
+
+        <!-- Center Drink -->
         <transition
           name="fade-up-in"
           enter-active-class="animate-fade-up-in"
@@ -51,35 +63,38 @@
         >
           <div
             :key="'center-' + activeSlide"
-            :style="{ 
+            :style="{
               backgroundImage: `url(${drinks[activeSlide].src})`,
               backgroundSize: 'cover',
-              backgroundPosition: 'center'
+              backgroundPosition: 'center',
             }"
             class="w-full h-full bg-no-repeat bg-center rounded-lg"
           ></div>
         </transition>
-  
-        <!-- Right Drink behind center with small animation -->
+
+        <!-- Right Drink -->
         <transition
           name="fade-up-in-small"
           enter-active-class="animate-fade-up-in-small"
           leave-active-class="animate-fade-up-out-small"
-          class="absolute w-[80%] h-full transform scale-90 right-[-20%] opacity-50 transition-all duration-1000 ease-in-out" 
+          class="absolute w-[80%] h-full transform scale-90 right-[-20%] opacity-50 transition-all duration-1000 ease-in-out"
         >
           <div
             :key="'right-' + activeSlide"
-            :style="{ 
-              backgroundImage: `url(${drinks[activeSlide].src})`, 
+            :style="{
+              backgroundImage: `url(${drinks[activeSlide].src})`,
               backgroundSize: 'cover',
-              backgroundPosition: 'center'
+              backgroundPosition: 'center',
             }"
             class="w-full h-full bg-no-repeat bg-center rounded-lg"
           ></div>
         </transition>
       </div>
-    </section>
-  </template>
+    </div>
+  </section>
+</template>
+
+
   
   <script>
   export default {

@@ -1,55 +1,54 @@
 <template>
-  <section class="h-[80vh] mt-12 relative flex items-center">
-    <!-- Adjusted height and centered items with overflow hidden -->
+  <section class="h-[50vh] sm:h-[65vh] md:h-[80vh] mt-6 sm:mt-8 md:mt-12 relative flex items-center">
     <div class="flex h-full w-full overflow-hidden items-center justify-center relative" ref="scrollContainer">
-      <!-- Left arrow -->
+      <!-- Make arrows smaller on mobile -->
       <button 
-        class="absolute left-8 z-20 p-6 bg-pink-300 hover:bg-pink-500 text-white rounded-full transition duration-300"
+        class="absolute left-2 sm:left-4 md:left-8 z-20 p-3 sm:p-4 md:p-6 bg-pink-300 hover:bg-pink-500 text-white rounded-full transition duration-300"
         @click="prevDrink"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-8 h-8">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
         </svg>
       </button>
 
-      <!-- Apply dynamic translateX to the entire container to create the sliding effect -->
       <div
         class="flex h-full w-full items-center justify-center transition-transform duration-1000 ease-in-out"
         :style="{ transform: `translateX(${translateX}px)` }"
       >
+        <!-- Make drink cards smaller on mobile -->
         <div
           v-for="(drink, index) in drinks"
           :key="drink.name"
           :class="[
-            'relative flex-shrink-0 w-[20%] h-[65vh] mx-4 rounded-xl overflow-hidden transition-all duration-1000 ease-in-out transform',
+            'relative flex-shrink-0 w-[30%] sm:w-[25%] md:w-[20%] h-[40vh] sm:h-[50vh] md:h-[65vh] mx-2 sm:mx-3 md:mx-4 rounded-xl overflow-hidden transition-all duration-1000 ease-in-out transform',
             { 'selected': selectedIndex === index }
           ]"
           @click="selectDrink(index)"
         >
-          <!-- Background color grows using the "selected" class with Tailwind's bg- classes -->
           <div
             :class="[
               'background-grow',
-              drink.bgClass, // Apply drink-specific background class
-              selectedIndex === index ? 'selected' : '' // Only expand if selected
+              drink.bgClass,
+              selectedIndex === index ? 'selected' : ''
             ]"
           ></div>
           <img :src="drink.src" :alt="drink.name" class="w-full h-full object-cover pointer-events-none rounded-xl z-10" />
         </div>
       </div>
 
-      <!-- Right arrow -->
+      <!-- Right arrow with mobile adjustments -->
       <button 
-        class="absolute right-8 z-20 p-6 bg-pink-300 hover:bg-pink-500 text-white rounded-full transition duration-300"
+        class="absolute right-2 sm:right-4 md:right-8 z-20 p-3 sm:p-4 md:p-6 bg-pink-300 hover:bg-pink-500 text-white rounded-full transition duration-300"
         @click="nextDrink"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-8 h-8">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
         </svg>
       </button>
     </div>
   </section>
 </template>
+
 
 
 
@@ -80,14 +79,20 @@ export default {
   methods: {
     selectDrink(index) {
       const stepDiff = index - this.selectedIndex;
-
-      // Update selected index
       this.selectedIndex = index;
 
-      // Calculate the new translateX value to center the selected item
-      const cardWidth = 0.22 * this.$refs.scrollContainer.clientWidth; // 22% width of each card
-      const offset = stepDiff * cardWidth; // Calculate how much to translate based on step difference
-      this.translateX -= offset; // Update the translateX to slide to the correct position
+      // Wait for ref to be available
+      this.$nextTick(() => {
+        const containerWidth = this.$refs.scrollContainer?.clientWidth || window.innerWidth;
+        
+        let cardWidthPercent = 0.3; // 30% for mobile
+        if (containerWidth >= 640) cardWidthPercent = 0.25; // 25% for sm
+        if (containerWidth >= 768) cardWidthPercent = 0.22; // 22% for md
+        
+        const cardWidth = cardWidthPercent * containerWidth;
+        const offset = stepDiff * cardWidth;
+        this.translateX -= offset;
+      });
     },
     nextDrink() {
       if (this.selectedIndex < this.drinks.length - 1) {

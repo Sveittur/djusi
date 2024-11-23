@@ -1,16 +1,24 @@
 <template>
-  <div :class="activeColorClass" class="transition-colors duration-1000">
-    <MyHeader :activeColorClass="activeColorClass" />
+  <div :class="activeColorClass" class="transition-colors duration-1000 min-h-screen">
+    <!-- Add responsive classes to your components -->
+    <MyHeader :activeColorClass="activeColorClass" class="w-full" />
 
-    <HeroSection2 @colorChange="updateColorClass" />
+    <HeroSection2 
+      @colorChange="updateColorClass" 
+      class="px-4 md:px-8 lg:px-16" 
+    />
 
-    <div class="bg-white"> <!-- No gap here, explicitly set background white -->
-      <ItemWheel />
+    <div class="bg-white w-full"> 
+      <ItemWheel class="w-full max-w-screen-xl mx-auto px-4 md:px-8" />
     </div>
 
-    <ContactUs :activeColorClass="activeColorClass" />
+    <ContactUs 
+      :activeColorClass="activeColorClass" 
+      class="w-full px-4 md:px-8 lg:px-16"
+    />
   </div>
 </template>
+
 
 <script>
 import MyHeader from './components/MyHeader.vue';

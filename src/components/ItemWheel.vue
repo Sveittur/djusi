@@ -160,17 +160,50 @@ img {
 /* Style for the candy pink arrows with more margin and bigger size */
 button {
   z-index: 20;
-  background-color: #ff69b4; /* Candy pink */
+  background-color: #ff69b4;
   color: white;
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
+  width: 40px; /* Smaller on mobile */
+  height: 40px; /* Smaller on mobile */
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin: 0 1rem; /* Add margin between button and screen edge */
+  margin: 0 1rem;
+}
+
+@media (min-width: 640px) {
+  button {
+    width: 50px; /* Medium size for tablet */
+    height: 50px;
+  }
+}
+
+@media (min-width: 768px) {
+  button {
+    width: 60px; /* Larger for desktop */
+    height: 60px;
+  }
+}
+
+button svg {
+  width: 20px; /* Smaller on mobile */
+  height: 20px;
+}
+
+@media (min-width: 640px) {
+  button svg {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+@media (min-width: 768px) {
+  button svg {
+    width: 32px;
+    height: 32px;
+  }
 }
 
 button:hover {

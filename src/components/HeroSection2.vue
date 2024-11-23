@@ -1,18 +1,19 @@
 <template>
   <section
-    :class="[drinks[activeSlide].bgClass, 'w-full h-[100vh] relative overflow-hidden flex items-center justify-center transition-colors duration-1000']"
+    :class="[drinks[activeSlide].bgClass, 'w-full h-[100vh] relative overflow-hidden flex items-start md:items-center justify-center transition-colors duration-1000']"
     @colorChange="emitColorChange"
   >
     <!-- Bottom Mask gradient for blending into the component below -->
     <div class="absolute bottom-0 left-0 w-full h-32 pointer-events-none bg-gradient-to-t from-white to-transparent"></div>
 
     <!-- Content Wrapper -->
+    <div class="mobile-padding z-10 flex flex-col md:flex-row items-center justify-start md:justify-center w-full h-full px-4 md:px-12">
+
     <div
-      class="z-10 flex flex-col md:flex-row items-center justify-center w-full h-full px-4 md:px-12"
-      :class="{'pt-12': true, 'md:pt-0': true}"
-    >
+  class="z-10 flex flex-col md:flex-row items-center justify-start md:justify-center w-full h-full px-4 md:px-12 pt-[150px] md:pt-0"
+>
       <!-- Text Section -->
-      <div class="w-full md:w-2/5 px-4 md:px-12 text-center md:text-left mb-6 md:mb-0">
+      <div class="w-full md:w-2/5 px-4 md:px-12 text-center md:text-left">
         <transition-group
           name="text"
           tag="div"
@@ -33,8 +34,7 @@
 
       <!-- Drinks Section -->
       <div
-        class="relative flex items-center justify-center w-full md:w-2/5 h-[50vh] sm:h-[60vh] md:h-[80vh]"
-        :class="{'mt-[-30px]': true, 'md:mt-0': true}"  
+        class="relative flex items-center justify-center w-full md:w-2/5 h-[50vh] sm:h-[60vh] md:h-[80vh] mt-[-30px] md:mt-0"
       >
         <!-- Left Drink -->
         <transition
@@ -91,12 +91,15 @@
         </transition>
       </div>
     </div>
+    </div>
   </section>
 </template>
 
 
+
   
   <script>
+  
   export default {
     data() {
       return {
@@ -124,7 +127,9 @@
         this.$emit('colorChange', this.drinks[this.activeSlide].bgClass);
       },
     },
+    
   };
+  
   </script>
   
   <style scoped>
@@ -134,5 +139,11 @@
     padding: 0;
     margin: 0;
   }
+
+  @media (max-width: 768px) {
+  .mobile-padding {
+    padding-top: 150px;
+  }
+}
   </style>
   

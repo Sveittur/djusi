@@ -12,24 +12,26 @@
     <div
   class="z-10 flex flex-col md:flex-row items-center justify-start md:justify-center w-full h-full px-4 md:px-12 pt-[150px] md:pt-0"
 >
-      <!-- Text Section -->
+     <!-- Text Section -->
       <div class="w-full md:w-2/5 px-4 md:px-12 text-center md:text-left">
-        <transition-group
-          name="text"
-          tag="div"
-          enter-active-class="animate-text-in-right"
-          leave-active-class="animate-text-out-left"
-          class="relative"
-        >
-          <div :key="activeSlide">
-            <h1 class="text-2xl sm:text-4xl md:text-6xl font-bold mb-4 md:mb-6 text-white">
-              {{ drinks[activeSlide].name }}
-            </h1>
-            <p class="text-sm sm:text-lg md:text-xl text-white">
-              {{ drinks[activeSlide].description }}
-            </p>
-          </div>
-        </transition-group>
+        <div class="transform -translate-y-24">
+          <transition-group
+            name="text"
+            tag="div"
+            enter-active-class="animate-text-in-right"
+            leave-active-class="animate-text-out-left"
+            class="relative"
+          >
+            <div :key="activeSlide" class="absolute inset-0">
+              <h1 class="text-2xl sm:text-4xl md:text-6xl font-bold mb-4 md:mb-6 text-white">
+                {{ drinks[activeSlide].name }}
+              </h1>
+              <p class="text-sm sm:text-lg md:text-xl text-white">
+                {{ drinks[activeSlide].description }}
+              </p>
+            </div>
+          </transition-group>
+        </div>
       </div>
 
       <!-- Drinks Section -->

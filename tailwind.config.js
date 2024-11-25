@@ -22,12 +22,13 @@ module.exports = {
         },
         textOutLeft: {
           '0%': { opacity: '1', transform: 'translateX(0)' },
-          '100%': { opacity: '0', transform: 'translateX(-100px)' },
+          '100%': { opacity: '0', transform: 'translateX(-50px)' }
         },
         textInRight: {
-          '0%': { opacity: '0', transform: 'translateX(100px)' },
-          '100%': { opacity: '1', transform: 'translateX(0)' },
+          '0%': { opacity: '0', transform: 'translateX(50px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' }
         },
+
         fadeUpOutSmall: {
           '0%': { opacity: '0.5', transform: 'scale(0.9) translateY(0)' },
           '100%': { opacity: '0', transform: 'scale(0.9) translateY(-50px)' }, // Keep smaller and fade out

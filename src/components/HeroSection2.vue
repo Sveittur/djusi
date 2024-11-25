@@ -142,7 +142,12 @@
 
   @media (max-width: 768px) {
   .mobile-padding {
-    padding-top: 150px;
+    padding-top: 100px;
+  }
+  
+  .animate-text-in-right,
+  .animate-text-out-left {
+    animation: none;
   }
 }
   </style>

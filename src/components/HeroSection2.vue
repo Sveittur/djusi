@@ -144,7 +144,7 @@
 
   @media (max-width: 768px) {
   .mobile-padding {
-    padding-top: 100px;
+    padding-top: 200px;
   }
   
   .animate-text-in-right,

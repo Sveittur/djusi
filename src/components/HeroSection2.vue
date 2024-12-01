@@ -103,34 +103,29 @@
   <script>
   
   export default {
-    data() {
-      return {
-        drinks: [
-          { name: 'Lemon Gin Fizz', description: 'A refreshing lemon-based cocktail.', src: require('@/assets/gin.png'), bgClass: 'bg-gin' },
-          { name: 'Passion Fruit Martini', description: 'A tropical mix of passion fruit and vodka.', src: require('@/assets/passion.png'), bgClass: 'bg-passion' },
-          { name: 'Raspberry', description: 'Sweet and tart raspberry delight.', src: require('@/assets/berry.png'), bgClass: 'bg-berry' },
-          { name: 'On The Peach', description: 'Juicy peach mixed with smooth gin.', src: require('@/assets/peach.png'), bgClass: 'bg-peach' },
-          { name: 'Pina Colada', description: 'A creamy pineapple and coconut drink.', src: require('@/assets/pino.png'), bgClass: 'bg-pino' },
-        ],
-        activeSlide: 0,
-      };
-    },
-    mounted() {
-      this.startSlideshow();
-    },
-    methods: {
-      startSlideshow() {
-        setInterval(() => {
-          this.activeSlide = (this.activeSlide + 1) % this.drinks.length;
-          this.emitColorChange();
-        }, 6000);
-      },
-      emitColorChange() {
-        this.$emit('colorChange', this.drinks[this.activeSlide].bgClass);
-      },
-    },
-    
-  };
+  props: ['selectedDrink'],
+  data() {
+    return {
+      drinks: [
+        { name: 'Lemon Gin Fizz', description: 'A refreshing lemon-based cocktail.', src: require('@/assets/gin.png'), bgClass: 'bg-gin' },
+        { name: 'Passion Fruit Martini', description: 'A tropical mix of passion fruit and vodka.', src: require('@/assets/passion.png'), bgClass: 'bg-passion' },
+        { name: 'Raspberry', description: 'Sweet and tart raspberry delight.', src: require('@/assets/berry.png'), bgClass: 'bg-berry' },
+        { name: 'On The Peach', description: 'Juicy peach mixed with smooth gin.', src: require('@/assets/peach.png'), bgClass: 'bg-peach' },
+        { name: 'Pina Colada', description: 'A creamy pineapple and coconut drink.', src: require('@/assets/pino.png'), bgClass: 'bg-pino' },
+      ],
+      activeSlide: 2
+    };
+  },
+  watch: {
+    selectedDrink(newDrink) {
+      if (newDrink) {
+        const index = this.drinks.findIndex(d => d.name === newDrink.name);
+        this.activeSlide = index;
+        this.$emit('colorChange', this.drinks[index].bgClass);
+      }
+    }
+  }
+};
   
   </script>
   

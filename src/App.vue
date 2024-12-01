@@ -1,21 +1,14 @@
 <template>
-  <div :class="activeColorClass" class="transition-colors duration-1000 min-h-screen">
-    <!-- Add responsive classes to your components -->
-    <MyHeader :activeColorClass="activeColorClass" class="w-full" />
-
+  <div :class="activeColorClass" class="transition-colors duration-1000">
+    <MyHeader :activeColorClass="activeColorClass" />
     <HeroSection2 
+      :selectedDrink="selectedDrink"
       @colorChange="updateColorClass" 
-      class="px-4 md:px-8 lg:px-16" 
     />
-
-    <div class="bg-white w-full"> 
-      <ItemWheel class="w-full max-w-screen-xl mx-auto px-4 md:px-8" />
+    <div class="bg-white">
+      <ItemWheel @drinkSelected="handleDrinkSelected" />
     </div>
-
-    <ContactUs 
-      :activeColorClass="activeColorClass" 
-      class="w-full px-4 md:px-8 lg:px-16"
-    />
+    <ContactUs :activeColorClass="activeColorClass" />
   </div>
 </template>
 
@@ -29,13 +22,18 @@ import ContactUs from './components/ContactUs.vue';
 export default {
   data() {
     return {
-      activeColorClass: 'bg-gin',
+      activeColorClass: 'bg-berry',
+      selectedDrink: null
     };
   },
   methods: {
+    handleDrinkSelected(drink) {
+      this.selectedDrink = drink;
+      this.updateColorClass(drink.bgClass);
+    },
     updateColorClass(newColorClass) {
       this.activeColorClass = newColorClass;
-    },
+    }
   },
   components: {
     MyHeader,

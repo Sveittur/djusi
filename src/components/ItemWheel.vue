@@ -78,21 +78,20 @@ export default {
   },
   methods: {
     selectDrink(index) {
-      const stepDiff = index - this.selectedIndex;
-      this.selectedIndex = index;
+    const stepDiff = index - this.selectedIndex;
+    this.selectedIndex = index;
+    this.$emit('drinkSelected', this.drinks[index]);
 
-      // Wait for ref to be available
-      this.$nextTick(() => {
-        const containerWidth = this.$refs.scrollContainer?.clientWidth || window.innerWidth;
-        
-        let cardWidthPercent = 0.3; // 30% for mobile
-        if (containerWidth >= 640) cardWidthPercent = 0.25; // 25% for sm
-        if (containerWidth >= 768) cardWidthPercent = 0.22; // 22% for md
-        
-        const cardWidth = cardWidthPercent * containerWidth;
-        const offset = stepDiff * cardWidth;
-        this.translateX -= offset;
-      });
+    this.$nextTick(() => {
+      const containerWidth = this.$refs.scrollContainer?.clientWidth || window.innerWidth;
+      let cardWidthPercent = 0.3;
+      if (containerWidth >= 640) cardWidthPercent = 0.25;
+      if (containerWidth >= 768) cardWidthPercent = 0.22;
+      
+      const cardWidth = cardWidthPercent * containerWidth;
+      const offset = stepDiff * cardWidth;
+      this.translateX -= offset;
+    });
     },
     nextDrink() {
       if (this.selectedIndex < this.drinks.length - 1) {
@@ -104,7 +103,9 @@ export default {
         this.selectDrink(this.selectedIndex - 1);
       }
     },
+    
   },
+  
 };
 </script>
 
